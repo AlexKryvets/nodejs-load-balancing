@@ -1,0 +1,44 @@
+version: '3.3'
+
+services:
+  nginx:
+    image: nginx
+    container_name: nlb_nginx
+    environment:
+      NODE_PORT_1: 3000
+      NODE_PORT_2: 3000
+      NODE_PORT_3: 3000
+      NODE_PORT_4: 3000
+    ports:
+      - 80:80
+    volumes:
+      - './nginx:/etc/nginx/templates'
+#    - './ssl:/etc/nginx/ssl'
+  node1:
+    container_name: nlb_node1
+    build:
+      context: .
+    environment:
+      ADDRESS: 0.0.0.0
+      PORT: 3000
+  node2:
+    container_name: nlb_node2
+    build:
+      context: .
+    environment:
+      ADDRESS: 0.0.0.0
+      PORT: 3000
+  node3:
+    container_name: nlb_node3
+    build:
+      context: .
+    environment:
+      ADDRESS: 0.0.0.0
+      PORT: 3000
+  node4:
+    container_name: nlb_node4
+    build:
+      context: .
+    environment:
+      ADDRESS: 0.0.0.0
+      PORT: 3000

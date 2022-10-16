@@ -1,0 +1,27 @@
+proxy_cache_path /tmp/NGINX_cache/ keys_zone=backcache:10m;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+upstream nodejs {
+    # Use IP Hash for session persistence
+    # ip_hash;
+
+    # List of Node.JS Application Servers
+    server node1:${NODE_PORT_1};
+    server node2:${NODE_PORT_2};
+    server node3:${NODE_PORT_3};
+    server node4:${NODE_PORT_4};
+}
+
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://nodejs;
+        proxy_cache backcache;
+    }
+}
